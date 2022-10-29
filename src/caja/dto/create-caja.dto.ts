@@ -3,9 +3,9 @@ import { IsNotEmpty, IsString, MinLength } from "class-validator";
 
 export class CreateCajaDto {
 
-    @ApiProperty({required: true, type: String})
     @IsNotEmpty()
     @IsString()
     @MinLength(8)
+    @ApiProperty({required: true, type: String})
     Descripcion: string
 }

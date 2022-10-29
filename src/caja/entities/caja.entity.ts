@@ -9,8 +9,8 @@ export class Caja {
 
     id: ObjectId
 
-    @ApiProperty({required: true, type: String})
     @Prop()
+    @ApiProperty({required: true, type: String})
     Descripcion: string
 
 }

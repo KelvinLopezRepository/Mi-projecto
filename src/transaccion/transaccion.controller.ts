@@ -2,7 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TransaccionService } from './transaccion.service';
 import { CreateTransaccionDto } from './dto/create-transaccion.dto';
 import { UpdateTransaccionDto } from './dto/update-transaccion.dto';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Transaccion } from './entities/transaccion.entity';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Entidad Transaccion-Controllers')
 @Controller('transaccion')
@@ -10,8 +11,7 @@ export class TransaccionController {
   constructor(private readonly transaccionService: TransaccionService) {}
 
   @Post()
-  @ApiBody({description: 'Se insertan los datos declarados en el createTransaccionDto'})
-  @ApiResponse({status:201, description:'Datos insertados - Modelo Transaccion'})
+  @ApiResponse({status:201, description:'Datos insertados - Modelo Transaccion', type: Transaccion})
   @ApiResponse({status:500, description:'Internal Error Server'})
   create(@Body() createTransaccionDto: CreateTransaccionDto) {
     return this.transaccionService.create(createTransaccionDto);
@@ -31,7 +31,6 @@ export class TransaccionController {
   }
 
   @Patch(':id')
-  @ApiBody({description: 'Se insertan los datos declarados en el updateTransaccionDto'})
   @ApiResponse({status:201, description:'Actualizar datos por el id - Modelo Transaccion'})
   @ApiResponse({status:404, description:'Datos no encontrados en DB'})
   update(@Param('id') id: string, @Body() updateTransaccionDto: UpdateTransaccionDto) {

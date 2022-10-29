@@ -3,6 +3,7 @@ import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ConceptoService } from './concepto.service';
 import { CreateConceptoDto } from './dto/create-concepto.dto';
 import { UpdateConceptoDto } from './dto/update-concepto.dto';
+import { Concepto } from './entities/concepto.entity';
 
 @ApiTags('Entidad Concepto-Controllers')
 @Controller('concepto')
@@ -10,8 +11,7 @@ export class ConceptoController {
   constructor(private readonly conceptoService: ConceptoService) {}
 
   @Post()
-  @ApiBody({description: 'Se insertan los datos declarados en el createConceptoDto'})
-  @ApiResponse({status:201, description:'Datos insertados-Modelo Concepto'})
+  @ApiResponse({status:201, description:'Datos insertados-Modelo Concepto', type: Concepto})
   @ApiResponse({status:500, description:'Internal Error Server'})
   create(@Body() createConceptoDto: CreateConceptoDto) {
     return this.conceptoService.create(createConceptoDto);
@@ -31,7 +31,6 @@ export class ConceptoController {
   }
 
   @Patch(':id')
-  @ApiBody({description: 'Se insertan los datos declarados en el updateCajaDto'})
   @ApiResponse({status:201, description:'Actualizar datos por el id - Modelo Concepto'})
   @ApiResponse({status:404, description:'Datos no encontrados en DB'})
   update(@Param('id') id: string, @Body() updateConceptoDto: UpdateConceptoDto) {

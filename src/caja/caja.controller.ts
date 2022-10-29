@@ -3,6 +3,7 @@ import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CajaService } from './caja.service';
 import { CreateCajaDto } from './dto/create-caja.dto';
 import { UpdateCajaDto } from './dto/update-caja.dto';
+import { Caja } from './entities/caja.entity';
 
 @ApiTags('Entidad Caja-Controllers')
 @Controller('caja')
@@ -10,8 +11,7 @@ export class CajaController {
   constructor(private readonly cajaService: CajaService) {}
 
   @Post()
-  @ApiBody({description: 'Se insertan los datos declarados en el createCajaDto'})
-  @ApiResponse({status:201, description:'Datos insertados'})
+  @ApiResponse({status:201, description:'Datos insertados', type: Caja})
   @ApiResponse({status:500, description:'Internal Error Server'})
   create(@Body() createCajaDto: CreateCajaDto) {
     return this.cajaService.create(createCajaDto);
@@ -31,7 +31,6 @@ export class CajaController {
   }
 
   @Patch(':id')
-  @ApiBody({description: 'Se insertan los datos declarados en el updateCajaDto'})
   @ApiResponse({status:201, description:'Actualizar datos por el id'})
   @ApiResponse({status:404, description:'Datos no encontrados en DB'})
   update(@Param('id') id: string, @Body() updateCajaDto: UpdateCajaDto) {
